@@ -1,0 +1,73 @@
+{% from "macros/svgs.html" import star, pencil %}
+
+{% extends "layout.html" %}
+
+{%- block head_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe_details.css') }}" />
+{% endblock %}
+
+{% block main_content %}
+<div class="container">
+    <header class="movie__header">
+        <div class="header__row">
+            <div class="movie__name">
+                <h1>{{ recipe.title }}</h1>
+                <div class="movie__rating">
+                    {% for i in range(5) %}
+                        <a class="rating__link" href="{{ url_for('pages.rate_recipe', _id=recipe._id, rating=i+1) }}">
+                            {{ star("star " + ("star--filled" if recipe.rating > i else "")) }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="movie__watched">
+                {% if recipe.last_watched %}
+                    <p>
+                        Last watched: <a href="{{ url_for('pages.watch_today', _id=recipe._id) }}" class="watched__link">
+                            <time datetime="{{ recipe.last_watched }}">{{recipe.last_watched.strftime("%d %b %Y")}}</time>
+                        </a>
+                    </p>
+                {% else %}
+                    <p><a href="{{ url_for('pages.watch_today', _id=recipe._id) }}" class="watched__link">Not watched yet</a></p>
+                {% endif %}
+                <a class="movie__edit" href="{{ url_for('pages.edit_recipe', _id=recipe._id) }}">Edit {{ pencil("pencil") }}</a>
+            </div>
+        </div>
+        <div class="header__row">
+            <ul class="movie__tags">
+            {% for tag in recipe.tags %}
+                <li class="movie__tag">{{ tag }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </header>
+
+    {% if recipe.ingredients %}
+    <div class="header__row">
+        <ul class="movie__description">
+            <h3>Ingredients: </h3>
+            {% for ingredient in recipe.ingredients %}
+            {{ ingredient }}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% if recipe.video_link %}
+    <iframe
+        class="movie__video"
+        src="{{ recipe.video_link }}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+    {% endif %}
+
+    {% if recipe.description %}
+        <p class="movie__description">{{ recipe.description }}</p>
+    {% else %}
+        <p class="movie__description">No description yet. <a class="link" href="{{ url_for('pages.edit_recipe', _id=recipe._id) }}">Add one?</a></p>
+    {% endif %}
+
+</div>
+{% endblock %}

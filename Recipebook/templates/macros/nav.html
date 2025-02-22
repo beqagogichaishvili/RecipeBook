@@ -1,0 +1,92 @@
+{% from "macros/svgs.html" import moon, sun %}
+
+{% macro header(email, theme) %}
+<header class="header">
+    <div class="nav-container">
+        <a href="{{ url_for('pages.index') }}" class="header__logo"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg class="logo__icon"
+   id="svg885"
+   xml:space="preserve"
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs889"><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath899"><path
+         d="M 0,24 H 24 V 0 H 0 Z"
+         id="path897" /></clipPath></defs><g
+     id="g891"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,32)"><g
+       id="g893"><g
+         id="g895"
+         clip-path="url(#clipPath899)"><g
+           id="g901"
+           transform="translate(17.5,1.5)"><path
+             d="m 0,0 v 20.051 c 0,0.968 1.098,1.25 1.807,0.592 C 3.23,19.321 5,16.5 5,12.5 5,6.5 0,3.233 0,3.233"
+             style="fill:none;stroke: currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path903" /></g><g
+           id="g905"
+           transform="translate(6.5,22.5)"><path
+             d="M 0,0 V -21"
+             style="fill:none;stroke: currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path907" /></g><g
+           id="g909"
+           transform="translate(11.5,22.5)"><path
+             d="m 0,0 v -6 c 0,-2.762 -2.238,-5 -5,-5 -2.762,0 -5,2.238 -5,5 v 6"
+             style="fill:none;stroke: currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path911" /></g></g></g></g></svg>
+
+        <span class="logo__name">Recipe Book</span>
+        </a>
+        <nav class="nav">
+            {% if not email %}
+                <a href="{{ url_for('pages.login') }}"
+                   class="nav__link {{ 'nav__link--active' if request.path == url_for('pages.login') }}">
+                    <span class="nav__item">Log in</span>
+                </a>
+                <a href="{{ url_for('pages.register') }}"
+                   class="nav__link {{ 'nav__link--active' if request.path == url_for('pages.register') }}">
+                    <span class="nav__item">Register</span>
+                </a>
+            {% else %}
+                <a href="{{ url_for('pages.index') }}"
+                   class="nav__link {{ 'nav__link--active' if request.path == url_for('pages.index') }}">
+                    <span class="nav__item">Recipes</span>
+                </a>
+                <a href="{{ url_for('pages.logout') }}" class="nav__link">
+                    <span class="nav__item">Log out</span>
+                </a>
+            {% endif %}
+            <a
+    href="{{ url_for('pages.toggle_theme', current_page=request.path) }}"
+    class="nav__link"
+>
+    <span class="nav__item">
+        {% if theme == "dark" %}
+            {{ sun("nav__icon") }}
+        {% else %}
+            {{ moon("nav__icon") }}
+        {% endif %}
+    </span>
+</a>
+        </nav>
+    </div>
+</header>
+{% endmacro %}
+
+
+
+
+
+
+
+
+
+
+
+
+
